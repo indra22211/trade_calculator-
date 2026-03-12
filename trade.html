@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Risk Target Calculator</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:25px;
+width:320px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input,select,button{
+width:90%;
+padding:8px;
+margin:8px;
+font-size:16px;
+}
+
+.result{
+margin-top:15px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Risk Calculator</h2>
+
+<input type="number" id="price1" placeholder="Price 1">
+
+<input type="number" id="price2" placeholder="Price 2">
+
+<input type="number" id="entry" placeholder="Entry Price">
+
+<select id="type">
+<option value="long">Long</option>
+<option value="short">Short</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result">
+<p>Target Price: <span id="target"></span></p>
+<p>Stop Loss: <span id="stoploss"></span></p>
+</div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let price1 = parseFloat(document.getElementById("price1").value);
+let price2 = parseFloat(document.getElementById("price2").value);
+let entry = parseFloat(document.getElementById("entry").value);
+let type = document.getElementById("type").value;
+
+let risk = price1 - price2;
+
+let target, stoploss;
+
+if(type === "long"){
+target = entry + (2 * risk);
+stoploss = entry - risk;
+}
+
+else{
+target = entry - (2 * risk);
+stoploss = entry + risk;
+}
+
+document.getElementById("target").innerText = target.toFixed(2);
+document.getElementById("stoploss").innerText = stoploss.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
