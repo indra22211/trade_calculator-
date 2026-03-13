@@ -3,6 +3,8 @@
 <head>
 <title>Risk Target Calculator</title>
 
+<link rel="icon" href="data:,">
+
 <style>
 body{
 font-family: Arial;
@@ -22,14 +24,28 @@ box-shadow:0 0 10px rgba(0,0,0,0.2);
 
 input,select,button{
 width:90%;
-padding:8px;
+padding:10px;
 margin:8px;
 font-size:16px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+background:#007BFF;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
 }
 
 .result{
 margin-top:15px;
 font-weight:bold;
+font-size:18px;
 }
 </style>
 
@@ -55,8 +71,8 @@ font-weight:bold;
 <button onclick="calculate()">Calculate</button>
 
 <div class="result">
-<p>Target Price: <span id="target"></span></p>
-<p>Stop Loss: <span id="stoploss"></span></p>
+<p>Target Price: <span id="target">-</span></p>
+<p>Stop Loss: <span id="stoploss">-</span></p>
 </div>
 
 </div>
@@ -70,7 +86,12 @@ let price2 = parseFloat(document.getElementById("price2").value);
 let entry = parseFloat(document.getElementById("entry").value);
 let type = document.getElementById("type").value;
 
-let risk = price1 - price2;
+if(isNaN(price1) || isNaN(price2) || isNaN(entry)){
+alert("Please enter all values");
+return;
+}
+
+let risk = Math.abs(price1 - price2);
 
 let target, stoploss;
 
@@ -78,7 +99,6 @@ if(type === "long"){
 target = entry + (2 * risk);
 stoploss = entry - risk;
 }
-
 else{
 target = entry - (2 * risk);
 stoploss = entry + risk;
